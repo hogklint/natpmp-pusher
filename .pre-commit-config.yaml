@@ -9,7 +9,7 @@ repos:
   - id: check-executables-have-shebangs
   - id: check-toml
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: 'v0.0.263'
+  rev: v0.0.263
   hooks:
   - id: ruff
   args: [ --fix, --show-fixes, --exit-non-zero-on-fix]
@@ -17,3 +17,7 @@ repos:
   rev: 23.7.0
   hooks:
   - id: black
+- repo: https://github.com/abravalheri/validate-pyproject
+  rev: v0.14
+  hooks:
+  - id: validate-pyproject
