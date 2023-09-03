@@ -1,0 +1,23 @@
+[project]
+name = "pmpnat-pusher"
+version = "1.0.0"
+description = "Push the new PMP-NAT port to git"
+requires-python = ">=3.10"
+dependencies = [
+  "peppercorn"
+]
+[project.optional-dependencies] # Optional
+dev = ["black", "pre-commit"]
+[project.scripts]
+pusher = "pusher.__main__:main"
+
+[build-system]
+requires = [
+  "setuptools~=65.3",
+  "wheel",
+  "build"
+]
+build-backend = "setuptools.build_meta"
+
+#[tool.setuptools.package-data]
+#"pusher" = ["*.dat"]
