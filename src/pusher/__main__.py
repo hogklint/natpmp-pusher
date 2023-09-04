@@ -19,4 +19,5 @@ def main():
     parser.add_argument("--clone-dir", nargs="?")
     conf.init_args(parser.parse_args())
     log.info("am main")
-    GitPush()
+    git_pusher = GitPush("charts/rtorrent/port.yaml")
+    git_pusher.get_yaml_file()
