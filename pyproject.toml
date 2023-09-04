@@ -33,3 +33,5 @@ select = ["A", "F", "S", "I", "T10", "B", "UP", "ISC", "T20", "RSE", "Q", "ARG",
 target-version = "py311"
 line-length = 120
 respect-gitignore = true
+
+ignore = ["TRY003"]
