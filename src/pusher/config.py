@@ -13,7 +13,7 @@ class Config:
         self.clone_dir = environ.get("PUSHER_CLONE_DIR")
 
     def init_args(self, args: Namespace) -> None:
-        for config in ["repo_url", "repo_username", "clone_dir"]:
+        for config in ["repo_url", "repo_username", "repo_branch", "clone_dir"]:
             if value := getattr(args, config, None):
                 setattr(self, config, value)
             elif value := getattr(self, config) is None:

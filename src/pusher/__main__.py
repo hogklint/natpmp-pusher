@@ -15,6 +15,7 @@ def main():
     parser = ArgumentParser(prog="NAT PMP Pusher")
     parser.add_argument("--repo-url", nargs="?")
     parser.add_argument("--repo-username", nargs="?")
+    parser.add_argument("--repo-branch", nargs="?", default="master")
     parser.add_argument("--clone-dir", nargs="?")
     conf.init_args(parser.parse_args())
     log.info("am main")
