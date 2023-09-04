@@ -1,5 +1,7 @@
 import logging
+from argparse import ArgumentParser
 
+from pusher import conf
 from pusher.git import GitPush
 
 logging.basicConfig(
@@ -10,5 +12,10 @@ log = logging.getLogger(__name__)
 
 
 def main():
+    parser = ArgumentParser(prog="NAT PMP Pusher")
+    parser.add_argument("--repo-url", nargs="?")
+    parser.add_argument("--repo-username", nargs="?")
+    parser.add_argument("--clone-dir", nargs="?")
+    conf.init_args(parser.parse_args())
     log.info("am main")
     GitPush()
