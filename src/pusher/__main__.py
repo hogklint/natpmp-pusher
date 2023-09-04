@@ -20,4 +20,7 @@ def main():
     conf.init_args(parser.parse_args())
     log.info("am main")
     git_pusher = GitPush("charts/rtorrent/port.yaml")
-    git_pusher.get_yaml_file()
+    data = git_pusher.read_yaml_file()
+    data["rtorrent"]["listenService"]["port"] = 50011
+    git_pusher.write_yaml_file(data)
+    git_pusher.commit_file("Updating to port 50011")
