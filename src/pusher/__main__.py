@@ -24,3 +24,4 @@ def main():
     data["rtorrent"]["listenService"]["port"] = 50011
     git_pusher.write_yaml_file(data)
     git_pusher.commit_file("Updating to port 50011")
+    git_pusher.push()
