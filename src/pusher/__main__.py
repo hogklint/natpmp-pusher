@@ -2,7 +2,9 @@ import logging
 from argparse import ArgumentParser
 
 from pusher import conf
+from pusher.event_loop import run
 from pusher.git import GitPush
+from pusher.port_cache import PortCache
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,9 +21,5 @@ def main():
     parser.add_argument("--clone-dir", nargs="?")
     conf.init_args(parser.parse_args())
     log.info("am main")
-    git_pusher = GitPush("charts/rtorrent/port.yaml")
-    data = git_pusher.read_yaml_file()
-    data["rtorrent"]["listenService"]["port"] = 50011
-    git_pusher.write_yaml_file(data)
-    git_pusher.commit_file("Updating to port 50011")
-    git_pusher.push()
+    port_cache = PortCache(GitPush("charts/rtorrent/port.yaml"))
+    run(port_cache)
