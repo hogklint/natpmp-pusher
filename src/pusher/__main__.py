@@ -21,5 +21,7 @@ def main():
     parser.add_argument("--clone-dir", nargs="?")
     conf.init_args(parser.parse_args())
     log.info("am main")
-    port_cache = PortCache(GitPush("charts/rtorrent/port.yaml"))
+    port_cache = PortCache(
+        GitPush("charts/rtorrent/port.yaml"), port_path="rtorrent.listenService.port"
+    )
     run(port_cache)
