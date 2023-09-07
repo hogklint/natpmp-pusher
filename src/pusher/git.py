@@ -35,8 +35,7 @@ class GitPush:
         return datetime.fromtimestamp(commit.committed_date)
 
     def read_yaml_file(self) -> dict:
-        y = safe_load(self.file.data_stream.read())
-        return y
+        return safe_load(self.file.data_stream.read())
 
     def write_yaml_file(self, data: dict) -> None:
         log.debug("Writing file: %s", data)
