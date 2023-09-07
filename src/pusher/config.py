@@ -36,8 +36,6 @@ class Config:
                 raise ValueError(
                     f"Must set --{config.replace('_', '-')} or env {env_name}"
                 )
-        if self.repo_password is None:
-            raise ValueError("Must set env PUSHER_REPO_PASSWORD")
 
     @property
     def repo_clone_url(self):
