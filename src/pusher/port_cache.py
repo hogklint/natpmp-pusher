@@ -8,9 +8,8 @@ log = logging.getLogger(__name__)
 
 
 class PortCache:
-    def __init__(self, git_push: GitPush, port_path: str) -> None:
+    def __init__(self, git_push: GitPush) -> None:
         self.git_push = git_push
-        self.port_path = port_path
         self.file_data = None
 
     @property
@@ -41,14 +40,14 @@ class PortCache:
 
     def _set_port(self, port: int) -> None:
         d = self._values()
-        parts = self.port_path.split(".")
+        parts = conf.port_path.split(".")
         for key in parts[:-1]:
             d = d[key]
         d[parts[-1]] = port
 
     def _get_port(self) -> int:
         d = self._values()
-        for key in self.port_path.split("."):
+        for key in conf.port_path.split("."):
             d = d[key]
         if not isinstance(d, int):
             raise TypeError("Port path does not point to an int")

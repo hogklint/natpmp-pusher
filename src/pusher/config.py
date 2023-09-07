@@ -7,20 +7,32 @@ from os import environ
 
 
 class Config:
+    repo_url: str
+    repo_username: str
+    repo_password: str
+    repo_branch: str
+    clone_dir: str
+    port_path: str
+    min_update_freq: timedelta
+
     def __init__(self) -> None:
-        self.repo_url = environ.get("PUSHER_REPO_URL")
-        self.repo_username = environ.get("PUSHER_REPO_USERNAME")
-        self.repo_password = environ.get("PUSHER_REPO_PASSWORD")
-        self.clone_dir = environ.get("PUSHER_CLONE_DIR")
         self.min_update_freq = timedelta(hours=12)
 
     def init_args(self, args: Namespace) -> None:
-        for config in ["repo_url", "repo_username", "repo_branch", "clone_dir"]:
-            if value := getattr(args, config, None):
+        for config in [
+            "repo_url",
+            "repo_username",
+            "repo_password",
+            "repo_branch",
+            "clone_dir",
+            "port_path",
+        ]:
+            env_name = f"PUSHER_{config.upper()}"
+            if value := getattr(args, config, None) or environ.get(env_name):
                 setattr(self, config, value)
-            elif value := getattr(self, config) is None:
+            else:
                 raise ValueError(
-                    f"Must set --{config.replace('_', '-')} or env PUSHER_{config.upper()}"
+                    f"Must set --{config.replace('_', '-')} or env {env_name}"
                 )
         if self.repo_password is None:
             raise ValueError("Must set env PUSHER_REPO_PASSWORD")

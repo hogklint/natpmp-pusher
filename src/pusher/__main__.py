@@ -18,10 +18,9 @@ def main():
     parser.add_argument("--repo-url", nargs="?")
     parser.add_argument("--repo-username", nargs="?")
     parser.add_argument("--repo-branch", nargs="?", default="master")
+    parser.add_argument("--port-path", nargs="?")
     parser.add_argument("--clone-dir", nargs="?")
     conf.init_args(parser.parse_args())
     log.info("am main")
-    port_cache = PortCache(
-        GitPush("charts/rtorrent/port.yaml"), port_path="rtorrent.listenService.port"
-    )
+    port_cache = PortCache(GitPush("charts/rtorrent/port.yaml"))
     run(port_cache)
