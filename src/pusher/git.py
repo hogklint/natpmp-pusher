@@ -10,11 +10,15 @@ log = logging.getLogger(__name__)
 
 
 class PushError(Exception):
-    pass
+    ...
 
 
 class PullError(Exception):
-    pass
+    ...
+
+
+class CommitError(Exception):
+    ...
 
 
 class GitPush:
@@ -45,7 +49,7 @@ class GitPush:
         log.debug("Commiting file: %s", self.file.path)
         for pull_info in self.repo.remote().pull():
             if (pull_info.flags & pull_info.ERROR) > 0:
-                raise PullError(f"Could not pull: {pull_info.note}")
+                raise CommitError(f"Could not pull: {pull_info.note}")
 
         self.repo.index.add([self.file.abspath])
         self.repo.index.commit(commit_message, author=self.actor, committer=self.actor)

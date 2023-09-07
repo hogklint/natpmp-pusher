@@ -1,16 +1,16 @@
 import logging
 from time import sleep
 
+from pusher.natpmp import NatPmp
 from pusher.port_cache import PortCache
 
 log = logging.getLogger(__name__)
 
 
-def run(port_cache: PortCache) -> None:
-    nat_port = 50011
+def run(port_cache: PortCache, natpmp: NatPmp) -> None:
     while True:
+        nat_port, renew_time = natpmp.get_port()
         if nat_port != port_cache.port:
-            log.info("New NAT port: %s", nat_port)
             port_cache.port = nat_port
-        log.info("Sleeping...")
-        sleep(10)
+        log.debug("Sleeping %s seconds...", renew_time)
+        sleep(renew_time)

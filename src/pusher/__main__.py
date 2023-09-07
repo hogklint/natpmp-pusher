@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from pusher import conf
 from pusher.event_loop import run
 from pusher.git import GitPush
+from pusher.natpmp import NatPmp
 from pusher.port_cache import PortCache
 
 logging.basicConfig(
@@ -24,4 +25,5 @@ def main():
     conf.init_args(parser.parse_args())
     log.info("am main")
     port_cache = PortCache(GitPush())
-    run(port_cache)
+    natpmp = NatPmp()
+    run(port_cache, natpmp)
