@@ -18,20 +18,19 @@ class PullError(Exception):
 
 
 class GitPush:
-    def __init__(self, file_path: str):
+    def __init__(self):
         self.repo = Repo.clone_from(
             conf.repo_clone_url, conf.clone_dir, branch=conf.repo_branch
         )
-        self.file_path = file_path
         self.actor = Actor("PmpNatBot", "-")
 
     @property
     def file(self) -> Blob:
-        return cast(Blob, self.repo.tree() / self.file_path)
+        return cast(Blob, self.repo.tree() / conf.port_file_path)
 
     @property
     def file_date(self) -> datetime:
-        commit = next(self.repo.iter_commits(paths=self.file_path, max_count=1))
+        commit = next(self.repo.iter_commits(paths=conf.port_file_path, max_count=1))
         return datetime.fromtimestamp(commit.committed_date)
 
     def read_yaml_file(self) -> dict:

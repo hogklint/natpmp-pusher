@@ -12,7 +12,8 @@ class Config:
     repo_password: str
     repo_branch: str
     clone_dir: str
-    port_path: str
+    port_file_path: str
+    port_yaml_path: str
     min_update_freq: timedelta
 
     def __init__(self) -> None:
@@ -25,7 +26,8 @@ class Config:
             "repo_password",
             "repo_branch",
             "clone_dir",
-            "port_path",
+            "port_yaml_path",
+            "port_file_path",
         ]:
             env_name = f"PUSHER_{config.upper()}"
             if value := getattr(args, config, None) or environ.get(env_name):
