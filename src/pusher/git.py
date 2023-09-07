@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from typing import cast
 
 from git import Actor, Blob, Repo
@@ -27,6 +28,11 @@ class GitPush:
     @property
     def file(self) -> Blob:
         return cast(Blob, self.repo.tree() / self.file_path)
+
+    @property
+    def file_date(self) -> datetime:
+        commit = next(self.repo.iter_commits(paths=self.file_path, max_count=1))
+        return datetime.fromtimestamp(commit.committed_date)
 
     def read_yaml_file(self) -> dict:
         y = safe_load(self.file.data_stream.read())

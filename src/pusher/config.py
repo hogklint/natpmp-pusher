@@ -2,6 +2,7 @@ __all__ = ["Config"]
 
 import re
 from argparse import Namespace
+from datetime import timedelta
 from os import environ
 
 
@@ -11,6 +12,7 @@ class Config:
         self.repo_username = environ.get("PUSHER_REPO_USERNAME")
         self.repo_password = environ.get("PUSHER_REPO_PASSWORD")
         self.clone_dir = environ.get("PUSHER_CLONE_DIR")
+        self.min_update_freq = timedelta(hours=12)
 
     def init_args(self, args: Namespace) -> None:
         for config in ["repo_url", "repo_username", "repo_branch", "clone_dir"]:
