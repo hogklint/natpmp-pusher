@@ -15,23 +15,35 @@ class Config:
     port_file_path: str
     port_yaml_path: str
     min_update_freq: timedelta
+    nat_gateway: str
+    nat_udp: bool
+    nat_private_port: int
+    nat_lifetime: int
 
     def __init__(self) -> None:
         self.min_update_freq = timedelta(hours=12)
 
     def init_args(self, args: Namespace) -> None:
-        for config in [
-            "repo_url",
-            "repo_username",
-            "repo_password",
-            "repo_branch",
-            "clone_dir",
-            "port_yaml_path",
-            "port_file_path",
+        for config, required in [
+            ("repo_url", True),
+            ("repo_username", True),
+            ("repo_password", True),
+            ("repo_branch", True),
+            ("clone_dir", True),
+            ("port_yaml_path", True),
+            ("port_file_path", True),
+            ("nat_gateway", False),
+            ("nat_udp", True),
+            ("nat_private_port", True),
+            ("nat_lifetime", True),
         ]:
             env_name = f"PUSHER_{config.upper()}"
-            if value := getattr(args, config, None) or environ.get(env_name):
+            if (value := getattr(args, config, None)) is not None or (
+                value := environ.get(env_name)
+            ):
                 setattr(self, config, value)
+            elif not required:
+                setattr(self, config, None)
             else:
                 raise ValueError(
                     f"Must set --{config.replace('_', '-')} or env {env_name}"

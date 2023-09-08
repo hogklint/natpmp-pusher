@@ -1,14 +1,10 @@
 import logging
 from datetime import datetime, timedelta
 
-from natpmp import NATPMP_PROTOCOL_TCP, PortMapResponse, map_port
+from natpmp import NATPMP_PROTOCOL_TCP, NATPMP_PROTOCOL_UDP, PortMapResponse, map_port
+from pusher import conf
 
 log = logging.getLogger(__name__)
-
-gateway = "10.2.0.1"
-private_port = 30000
-protocol = NATPMP_PROTOCOL_TCP
-lifetime = 60
 
 
 class NatPmpError(Exception):
@@ -29,11 +25,11 @@ class NatPmp:
     def map_port(self) -> None:
         try:
             response = map_port(
-                protocol=protocol,
+                protocol=NATPMP_PROTOCOL_UDP if conf.nat_udp else NATPMP_PROTOCOL_TCP,
                 public_port=0,
-                private_port=private_port,
-                lifetime=lifetime,
-                gateway_ip=gateway,
+                private_port=conf.nat_private_port,
+                lifetime=conf.nat_lifetime,
+                gateway_ip=conf.nat_gateway,
             )
         except Exception as e:
             raise NatPmpError("Error mapping port") from e
