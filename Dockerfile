@@ -1,3 +1,4 @@
+# docker build . gitea.mnx.se/hogklint/pusher:0.1.0
 FROM python:3.11.5-alpine3.18 as build
 
 ENV PYTHONPATH ${PYTHONPATH}:/pusher/lib/python3.11/site-packages
