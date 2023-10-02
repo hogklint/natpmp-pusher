@@ -18,6 +18,7 @@ class Config:
     nat_gateway: str
     nat_udp: bool
     nat_private_port: int
+    nat_public_request_port: int
     nat_lifetime: int
 
     def __init__(self) -> None:
@@ -35,6 +36,7 @@ class Config:
             ("nat_gateway", False),
             ("nat_udp", True),
             ("nat_private_port", True),
+            ("nat_public_request_port", True),
             ("nat_lifetime", True),
         ]:
             env_name = f"PUSHER_{config.upper()}"

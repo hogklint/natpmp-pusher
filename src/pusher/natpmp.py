@@ -26,7 +26,7 @@ class NatPmp:
         try:
             response = map_port(
                 protocol=NATPMP_PROTOCOL_UDP if conf.nat_udp else NATPMP_PROTOCOL_TCP,
-                public_port=0,
+                public_port=conf.nat_public_request_port,
                 private_port=conf.nat_private_port,
                 lifetime=conf.nat_lifetime,
                 gateway_ip=conf.nat_gateway,

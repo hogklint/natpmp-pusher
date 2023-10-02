@@ -33,7 +33,13 @@ def main():
         "--nat-private-port",
         nargs="?",
         type=int,
-        help="gateway IP (default to looking it up)",
+        help="private port",
+    )
+    parser.add_argument(
+        "--nat-public-request-port",
+        nargs="?",
+        type=int,
+        help="public request port",
     )
     parser.add_argument(
         "--nat-lifetime", nargs="?", default=3600, type=int, help="desired lifetime"
